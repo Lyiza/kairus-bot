@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KairusBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ce73e95763cbd74d07acc6769c73d0132a90d8c")]
 [assembly: System.Reflection.AssemblyProductAttribute("KairusBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KairusBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

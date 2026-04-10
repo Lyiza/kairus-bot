@@ -27,6 +27,12 @@ public class VkCallbackController : ControllerBase
     private const string NoSavedRoutes = "У тебя пока нет сохранённых маршрутов";
     private const string TypeRouteNameHint = "Напиши название маршрута, чтобы открыть его";
 
+    private const string FollowChannelsMessage =
+        "Спасибо, что попробовал бот Кайрус!\n\n" +
+        "Подпишись на наши каналы:\n" +
+        "Дзен: https://dzen.ru/kairus\n" +
+        "Одноклассники: https://ok.ru/group/70000049424941";
+
     public VkCallbackController(
         IOptions<VkOptions> vkOptions,
         VkApiService vkApi,
@@ -284,13 +290,7 @@ public class VkCallbackController : ControllerBase
                 var route = _routes.Find(region, city, mood, roadType);
                 if (route is not null)
                 {
-                    await _vkApi.SendMessageAsync(peerId, RouteCardFormatter.Format(route), cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    await _vkApi.SendMessageAsync(
-                            peerId,
-                            "Спасибо, что попробовал наш бот. Подпишись на наши другие каналы: Одноклассники и Дзен.",
-                            cancellationToken: cancellationToken)
+                    await _vkApi.SendMessageAsync(peerId, RouteCardFormatter.Format(route, includeStart: false), cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     await _vkApi.SendMessageAsync(
@@ -298,6 +298,9 @@ public class VkCallbackController : ControllerBase
                             "Действия:",
                             VkKeyboardBuilder.ResultInlineKeyboard(route.Name, route.StartCoordinates),
                             cancellationToken)
+                        .ConfigureAwait(false);
+
+                    await _vkApi.SendMessageAsync(peerId, FollowChannelsMessage, cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     await _vkApi.SendMessageAsync(peerId, WhatNext, VkKeyboardBuilder.AfterResultKeyboardOneTime(), cancellationToken)
@@ -529,7 +532,7 @@ public class VkCallbackController : ControllerBase
             return false;
         }
 
-        error = Content("ok", "text/plain; charset=utf-8");
+        error = null!;
         return true;
     }
 
@@ -551,16 +554,14 @@ public class VkCallbackController : ControllerBase
 
         await _vkApi.SendMessageAsync(
                 peerId,
-                "Спасибо, что попробовал наш бот. Подпишись на наши другие каналы: Одноклассники и Дзен.",
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
-
-        await _vkApi.SendMessageAsync(
-                peerId,
                 "Действия:",
                 VkKeyboardBuilder.FavoriteRouteInlineKeyboard(match.Name, match.StartCoordinates),
                 cancellationToken)
             .ConfigureAwait(false);
+
+        await _vkApi.SendMessageAsync(peerId, FollowChannelsMessage, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
         await _vkApi.SendMessageAsync(peerId, WhatNext, VkKeyboardBuilder.AfterResultKeyboardOneTime(), cancellationToken)
             .ConfigureAwait(false);
 

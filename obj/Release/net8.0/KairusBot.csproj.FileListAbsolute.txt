@@ -26,3 +26,4 @@ C:\Users\PC\vibeCoding\KairusBot\obj\Release\net8.0\refint\KairusBot.dll
 C:\Users\PC\vibeCoding\KairusBot\obj\Release\net8.0\KairusBot.pdb
 C:\Users\PC\vibeCoding\KairusBot\obj\Release\net8.0\KairusBot.genruntimeconfig.cache
 C:\Users\PC\vibeCoding\KairusBot\obj\Release\net8.0\ref\KairusBot.dll
+C:\Users\PC\vibeCoding\KairusBot\obj\Release\net8.0\KairusBot.sourcelink.json

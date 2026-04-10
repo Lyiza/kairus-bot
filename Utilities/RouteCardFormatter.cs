@@ -5,13 +5,12 @@ namespace KairusBot.Utilities;
 
 public static class RouteCardFormatter
 {
-    public static string Format(RouteCard route)
+    public static string Format(RouteCard route, bool includeStart = true)
     {
         var title = $"**{route.Name}**";
         var vibe = BuildVibeLine(route);
-        var start = BuildStartLine(route.StartCoordinates);
 
-        return
+        var baseText =
 $@"{title}
 {vibe}
 
@@ -25,9 +24,15 @@ $@"{title}
 
 Описание: {route.Description}
 
-Ключевые точки: {route.Highlights}
+Ключевые точки: {route.Highlights}";
 
-{start}";
+        if (!includeStart)
+        {
+            return baseText;
+        }
+
+        var start = BuildStartLine(route.StartCoordinates);
+        return $"{baseText}\n\n{start}";
     }
 
     private static string BuildVibeLine(RouteCard route)
